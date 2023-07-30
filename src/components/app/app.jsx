@@ -2,40 +2,41 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients"
 import { BurgerConstructor } from "../burger-constructor/burger-constructor"
+import { useState, useEffect } from "react";
+import { data } from "../../utils/data"
 
-const burger = {
-  top: {
-    title: "Краторная булка N-200i",
-    price: 1255,
-    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-    _id: "60666c42cc7b410027a1a9b1"
-  },
-  middle: [
-    {
-      title: "Мясо бессмертных моллюсков Protostomia",
-      price: 1337,
-      image: "https://code.s3.yandex.net/react/code/meat-02.png",
-      _id: "60666c42cc7b410027a1a9b4"
-    }
-  ],
-  bottom: {
-    title: "Краторная булка N-200i",
-    price: 1255,
-    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-    _id: "60666c42cc7b410027a1a9b1"
+export function App() {
+
+  const [burger, setBurger] = useState({
+      top: data[0],
+      middle: [
+        data[4]
+      ],
+      bottom: data[0],
+    })
+
+  const deleteIngredient = (_id) => {
+    console.log("deleted: " + _id)
   }
-}
 
-function App() {
+  const addIngredient = (_id) => {
+    //console.log("added: " + _id)
+    const engredient = data.find((item) => {if (item._id === _id) return(item)})
+    console.log(engredient)
+    setBurger({...burger, middle:[...burger.middle, engredient]})
+  }
+
+  useEffect(() => {
+    console.log(burger);
+  }, [burger.middle])
+
   return (
     <div className={styles.app}>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients {...burger}/>
-        <BurgerConstructor {...burger}/>
+        <BurgerIngredients {...burger} addIngredient={addIngredient}/>
+        <BurgerConstructor {...burger} deleteIngredient={deleteIngredient}/>
       </main>
     </div>
   );
 }
-
-export default App;
