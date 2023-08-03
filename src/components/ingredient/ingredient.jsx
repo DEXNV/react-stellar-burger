@@ -11,8 +11,8 @@ export default class Ingredient extends React.Component {
 
     render(){
         return (
-            <div className={styles.ingredientCard} onClick={() => this.addIngredient(this.props._id)}>
-                <div className={styles.ingredientCounter}>{this.props.chosendefault  && <Counter count={1} size="default" extraClass="m-1"/>}</div>
+            <div className={styles.ingredientCard} /*onClick={() => this.addIngredient(this.props._id)}*/>
+                <div className={styles.ingredientCounter}>{this.props.count !== 0  && <Counter count={this.props.count} size="default" extraClass="m-1"/>}</div>
                 <img src={this.props.image} className={"ml-4 mr-4 mb-2  " + styles.ingredientImage}></img>
                 <div className={styles.ingredientPrice}>
                 <p className="mr-2 text text_type_digits-default">{this.props.price}</p><CurrencyIcon type="primary" />

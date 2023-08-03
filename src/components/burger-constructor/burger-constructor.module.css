@@ -1,0 +1,33 @@
+.dragDots{
+    height: 24px;
+    width: 24px;
+    position: relative;
+    border: none;
+    background: none;
+    background-image: url("../../images/dots.svg");
+}
+
+.elementsList {
+    display: grid;
+    max-width: 600px;
+    width: 100%;
+}
+
+.elementBox {
+    display: flex;
+    align-items: center;
+}
+
+.elementsListMain {
+    max-height: 464px;
+    overflow: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.burgerDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+

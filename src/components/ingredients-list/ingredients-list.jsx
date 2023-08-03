@@ -28,20 +28,37 @@ export default class IngredientsList extends React.Component {
         this.sortedIngredients.sauces = this.sortIngredient(this.props.ingredients, "sauce")
     }
 
+    countIngredient(item) {
+        let count = 0
 
+        if (this.props.burger.top === item) count++
+
+        Object.values(this.props.burger.middle).forEach((ingredient) => {
+            if(item === ingredient) 
+            {
+                console.log(ingredient)
+                count++
+            }
+        })
+
+        return count
+    }
+
+    
 
     render() {
+        
         return (
             <>
-                <div className={"custom-scroll " + styles.ingredientsList}>
+                <div className={styles.ingredientsList + " custom-scroll"}>
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="buns" key={"buns"}>Булки</p>
-                    {this.sortedIngredients.buns.map((item, i) => {return <Ingredient {...item} addIngredient={this.props.addIngredient} chosendefault={(i === 0)} key={"bun-" + (i+1)}/>})}
+                    {this.sortedIngredients.buns.map((item, i) => {return <Ingredient {...item}  addIngredient={this.props.addIngredient} count={this.countIngredient(item)} key={"bun-" + (i+1)}/>})}
 
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="sauces" key={"sauces"}>Соусы</p>
-                    {this.sortedIngredients.sauces.map((item, i) => {return <Ingredient {...item} addIngredient={this.props.addIngredient} key={"sauce-" + (i+1)}/>})}
+                    {this.sortedIngredients.sauces.map((item, i) => {return <Ingredient {...item} addIngredient={this.props.addIngredient} count={this.countIngredient(item)} key={"sauce-" + (i+1)}/>})}
 
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="mains" key={"mains"}>Начинка</p>
-                    {this.sortedIngredients.main.map((item, i) => {return <Ingredient {...item} addIngredient={this.props.addIngredient} key={"sauce-" + (i+1)}/>})}
+                    {this.sortedIngredients.main.map((item, i) => {return <Ingredient {...item} addIngredient={this.props.addIngredient} count={this.countIngredient(item)} key={"main-" + (i+1)}/>})}
                 </div>
             </>
         )
