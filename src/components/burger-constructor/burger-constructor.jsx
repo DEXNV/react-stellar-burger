@@ -1,6 +1,7 @@
 import React from "react";
-import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
+import PropTypes from 'prop-types';
 
 
 export class BurgerConstructor extends React.Component {
@@ -17,11 +18,19 @@ export class BurgerConstructor extends React.Component {
       this.forceUpdate()
     }
 
+    costCount() {
+      let cost = 0
+      this.props.middle.forEach(element => {
+        cost += element.price
+      });
+      return (cost += this.props.top.price)
+    }
+
 
     render() {
         return (
-            <section className={"pt-5 pr-4 pb-5 pl-4 mt-10 " + styles.elementsList}>
-              <div className={styles.burgerDiv}>
+            <section className={"mt-10 " + styles.elementsList}>
+              <div className={styles.burgerDiv + " pt-5 pb-5 pl-4"}>
                 <div className={styles.elementBox}>
                 <ConstructorElement
                   type="top"
@@ -37,7 +46,7 @@ export class BurgerConstructor extends React.Component {
                 {this.props.middle.map((item, i) => {
 
                   let first = ""
-                  if(i !== 0) first = " mt-2" 
+                  if(i !== 0) first = " mt-4" 
 
                   return <div className={styles.elementBox + first} key={"constructor-main " + i}>
                   <button className={styles.dragDots}/>
@@ -46,7 +55,7 @@ export class BurgerConstructor extends React.Component {
                     price={this.props.middle[i].price} 
                     thumbnail={this.props.middle[i].image} 
                     key={"ingredient " + i} 
-                    extraClass="ml-2"
+                    extraClass="ml-2 mr-2"
                   // handleClose={() => this.props.deleteIngredient(i)}
                   /></div>
                 })}
@@ -63,7 +72,20 @@ export class BurgerConstructor extends React.Component {
                 />
                 </div>
               </div>
+              <div className={styles.priceDiv + " pr-4 mt-5"}>
+                <div className={styles.priceCount}>
+                  <p className="text text_type_digits-medium">{this.costCount()}</p> 
+                  <CurrencyIcon type="primary" />
+                </div>
+                <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+              </div>
             </section>
           )
     }
+}
+
+BurgerConstructor.propTypes = {
+  top: PropTypes.object,
+  middle: PropTypes.array,
+  bottom: PropTypes.object
 }

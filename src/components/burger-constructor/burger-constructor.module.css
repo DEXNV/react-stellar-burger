@@ -10,24 +10,44 @@
 .elementsList {
     display: grid;
     max-width: 600px;
-    width: 100%;
+    width: max-content;
+    height: max-content;
 }
 
 .elementBox {
     display: flex;
     align-items: center;
+    width: max-content;
 }
 
 .elementsListMain {
-    max-height: 464px;
     overflow: auto;
     overflow-y: scroll;
     overflow-x: hidden;
+    scrollbar-width: thin;
 }
 
 .burgerDiv {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+    max-height: 656px;
+    height: 100%;
 }
+
+.priceDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    gap: 40px;
+    align-items: center;
+    max-height: 64px;
+}
+
+.priceCount {
+    display: flex;
+    align-items: center;
+}
+
+
 

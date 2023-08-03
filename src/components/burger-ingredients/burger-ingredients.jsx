@@ -3,6 +3,7 @@ import styles from "./burger-ingredients.module.css"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
 import { data } from "../../utils/data"
+import PropTypes from 'prop-types';
 
 export default class BurgerIngredients extends React.Component {
     constructor(props) {
@@ -40,4 +41,10 @@ export default class BurgerIngredients extends React.Component {
             </>
         )
     }
+}
+
+BurgerIngredients.propTypes = {
+    top: PropTypes.object,
+    middle: PropTypes.array,
+    bottom: PropTypes.object
 }
