@@ -36,7 +36,7 @@ export default class BurgerIngredients extends React.Component {
                         <a className={styles.anchor} href="#mains"><Tab value="three" active={this.state.current === 'three'} onClick={this.setCurrent}>
                             Начинки
                         </Tab></a>
-                    </div>
+                    </div> 
                     <IngredientsList ingredients={this.props.ingredientsList} burger={this.props} addIngredient={this.props.addIngredient}></IngredientsList>
                 </section>
             </>

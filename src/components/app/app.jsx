@@ -23,7 +23,7 @@ export function App() {
       bottom: data[0],
     },
   ingredients: [],
-  serverRespond: ""
+  serverRespond: "Loading"
 })
 
   // const deleteIngredient = (_id) => {
@@ -43,21 +43,23 @@ export function App() {
   const getIngredientsList = async () => {
     const res = await fetch(serverLink);
     const data = await res.json();
-      setState({...state, ingredients: data.data, serverRespond: "Success"})
+    setState({...state, ingredients: data.data, serverRespond: "Success"})
   }
 
   useEffect(() => {
     getIngredientsList();
+    console.log("222");console.log(state)
   }, [])
 
-  console.log("222");console.log(state)
-  setTimeout(() => {console.log("222");console.log(state)}, 2000)
+
+  // setTimeout(() => {console.log("222");console.log(state)}, 2000)
         
 
   
   return (
     <div className={styles.app}>
       <AppHeader/>
+      <h1>{state.ingredients + state.serverRespond}</h1>
       <main className={styles.main}>
         <BurgerIngredients {...state.burger} ingredientsList={state.ingredients}/>
         <BurgerConstructor {...state.burger}/>
