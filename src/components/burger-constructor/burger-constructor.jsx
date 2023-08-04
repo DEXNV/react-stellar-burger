@@ -48,7 +48,7 @@ export class BurgerConstructor extends React.Component {
                   let first = ""
                   if(i !== 0) first = " mt-4" 
 
-                  return <div className={styles.elementBox + first} key={"constructor-main " + i}>
+                  return (<div className={styles.elementBox + first} key={"constructor-main " + i}>
                   <button className={styles.dragDots}/>
                   <ConstructorElement 
                     text={this.props.middle[i].name} 
@@ -57,7 +57,7 @@ export class BurgerConstructor extends React.Component {
                     key={"ingredient " + i} 
                     extraClass="ml-2 mr-2"
                   // handleClose={() => this.props.deleteIngredient(i)}
-                  /></div>
+                  /></div>)
                 })}
                 </div>
 

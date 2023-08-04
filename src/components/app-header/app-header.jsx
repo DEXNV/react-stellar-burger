@@ -14,8 +14,10 @@ export default class AppHeader extends React.Component {
 
                     <div className={styles.navigationUnits}>
                         <div className={"pt-4 pr-5 pb-4 pl-5 " + styles.navigationUnit}>
+                            <a href="#" className={styles.link}>
                             <BurgerIcon type="primary" className={styles.icon}/>
                             <p className="ml-2 text text_type_main-default">Конструктор</p>
+                            </a>
                         </div>
                         <div className={"pt-4 pr-5 pb-4 pl-5 " + styles.navigationUnit}>
                             <ListIcon type="secondary" className={styles.icon}/>

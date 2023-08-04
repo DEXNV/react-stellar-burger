@@ -38,3 +38,9 @@
     position: absolute;
     align-self: center;
 }
+
+.link {
+    display: flex;
+    color: inherit;
+    text-decoration: none;
+}

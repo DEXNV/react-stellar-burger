@@ -9,7 +9,7 @@ export default class BurgerIngredients extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            current: "one"
+            current: "one",
         }
         this.setCurrent = this.setCurrent.bind(this)
     }
@@ -21,6 +21,7 @@ export default class BurgerIngredients extends React.Component {
     }
 
     render(){
+        
         return (
             <>
                 <section>
@@ -36,7 +37,7 @@ export default class BurgerIngredients extends React.Component {
                             Начинки
                         </Tab></a>
                     </div>
-                    <IngredientsList ingredients={data} burger={this.props} addIngredient={this.props.addIngredient}></IngredientsList>
+                    <IngredientsList ingredients={this.props.ingredientsList} burger={this.props} addIngredient={this.props.addIngredient}></IngredientsList>
                 </section>
             </>
         )

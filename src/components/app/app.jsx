@@ -3,11 +3,12 @@ import AppHeader from "../app-header/app-header";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients"
 import { BurgerConstructor } from "../burger-constructor/burger-constructor"
 import { useState, useEffect } from "react";
-import { data } from "../../utils/data"
+import { data, serverLink } from "../../utils/data"
 
 export function App() {
 
-  const [burger, setBurger] = useState({
+  const [state, setState] = useState({
+    burger: {
       top: data[0],
       middle: [
         data[2],
@@ -20,7 +21,10 @@ export function App() {
         data[4],
       ],
       bottom: data[0],
-    })
+    },
+  ingredients: [],
+  serverRespond: ""
+})
 
   // const deleteIngredient = (_id) => {
   //   console.log("deleted: " + _id)
@@ -36,12 +40,27 @@ export function App() {
   //   console.log(burger);
   // }, [burger.middle])
 
+  const getIngredientsList = async () => {
+    const res = await fetch(serverLink);
+    const data = await res.json();
+      setState({...state, ingredients: data.data, serverRespond: "Success"})
+  }
+
+  useEffect(() => {
+    getIngredientsList();
+  }, [])
+
+  console.log("222");console.log(state)
+  setTimeout(() => {console.log("222");console.log(state)}, 2000)
+        
+
+  
   return (
     <div className={styles.app}>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients {...burger}/>
-        <BurgerConstructor {...burger}/>
+        <BurgerIngredients {...state.burger} ingredientsList={state.ingredients}/>
+        <BurgerConstructor {...state.burger}/>
       </main>
     </div>
   );
