@@ -6,26 +6,19 @@ import { useState, useEffect } from "react";
 import { data, serverLink } from "../../utils/data"
 import { getIngredients } from "../../utils/api-ingredients";
 
+
+
 export function App() {
 
-  const [burger, setBurger] = useState({
-    top: data[0],
-    middle: [
-      data[2],
-      data[2],
-      data[4],
-      data[5],
-      data[4],
-      data[4],
-      data[4],
-      data[4],
-    ],
-    bottom: data[0],
-})
+  const [list, setList] = useState({
+    ingredients: [],
+    serverRespond: ""
+  })
 
-const [list, setList] = useState({
-  ingredients: [],
-  serverRespond: ""
+  const [burger, setBurger] = useState({
+    top: {},
+    middle: [],
+    bottom: {},
 })
 
 const [modal, setModal] = useState({
@@ -47,7 +40,7 @@ const [modal, setModal] = useState({
   // }, [burger.middle])
 
   useEffect(() => {
-    getIngredients(setList)
+    getIngredients(setList, setBurger)
   }, [])
 
   const openModal = () => {

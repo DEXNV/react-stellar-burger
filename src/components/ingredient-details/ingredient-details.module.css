@@ -1,0 +1,20 @@
+.img {
+    width: 520px;
+    height: 240px;
+}
+
+.tab {
+    list-style: none;
+    padding: 0;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

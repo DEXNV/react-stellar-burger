@@ -11,6 +11,7 @@ export const BurgerIngredients = (props) => {
 
     return(
         <>
+        
             <section>
                 <p className="text text_type_main-large">Соберите бургер</p>
                 <div className={"mt-5 mb-10 " + styles.tabs}>

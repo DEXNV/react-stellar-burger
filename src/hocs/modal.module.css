@@ -1,0 +1,52 @@
+.section {
+    position: absolute;
+    top: 20%;
+    left: 30%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 720px;
+    border-radius: 40px;
+    background: #1C1C21;
+
+    z-index: 5;
+}
+
+.number {
+    filter: drop-shadow(0 0 .5rem #4C4CFF);
+}
+
+.icon {
+    cursor: pointer;
+}
+
+.title {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.img {
+    width: 520px;
+    height: 240px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    gap: 20px;
+    justify-items: center;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
