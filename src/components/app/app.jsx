@@ -1,27 +1,28 @@
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients"
+import { BurgerIngredients } from "../burger-ingredients/burger-ingredients"
 import { BurgerConstructor } from "../burger-constructor/burger-constructor"
 import { useState, useEffect } from "react";
 import { data, serverLink } from "../../utils/data"
 
 export function App() {
 
-  const [state, setState] = useState({
-    burger: {
-      top: data[0],
-      middle: [
-        data[2],
-        data[2],
-        data[4],
-        data[5],
-        data[4],
-        data[4],
-        data[4],
-        data[4],
-      ],
-      bottom: data[0],
-    },
+  const [burger, setBurger] = useState({
+    top: data[0],
+    middle: [
+      data[2],
+      data[2],
+      data[4],
+      data[5],
+      data[4],
+      data[4],
+      data[4],
+      data[4],
+    ],
+    bottom: data[0],
+})
+
+const [list, setList] = useState({
   ingredients: [],
   serverRespond: "Loading"
 })
@@ -43,12 +44,12 @@ export function App() {
   const getIngredientsList = async () => {
     const res = await fetch(serverLink);
     const data = await res.json();
-    setState({...state, ingredients: data.data, serverRespond: "Success"})
+    setList({...list, ingredients: data.data, serverRespond: "Success"})
   }
 
   useEffect(() => {
     getIngredientsList();
-    console.log("222");console.log(state)
+    console.log(list)
   }, [])
 
 
@@ -59,10 +60,9 @@ export function App() {
   return (
     <div className={styles.app}>
       <AppHeader/>
-      <h1>{state.ingredients + state.serverRespond}</h1>
       <main className={styles.main}>
-        <BurgerIngredients {...state.burger} ingredientsList={state.ingredients}/>
-        <BurgerConstructor {...state.burger}/>
+        <BurgerIngredients {...burger} ingredientsList={list.ingredients}/>
+        <BurgerConstructor {...burger}/>
       </main>
     </div>
   );
