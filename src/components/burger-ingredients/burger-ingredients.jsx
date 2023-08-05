@@ -24,7 +24,7 @@ export const BurgerIngredients = (props) => {
                         Начинки
                     </Tab></a>
                 </div> 
-                <IngredientsList ingredients={props.ingredientsList} burger={props} addIngredient={props.addIngredient}></IngredientsList>
+                {props.ingredientsList.serverRespond === "Success" && <IngredientsList ingredients={props.ingredientsList.ingredients} burger={props} addIngredient={props.addIngredient}></IngredientsList>}
             </section>
         </>
     )

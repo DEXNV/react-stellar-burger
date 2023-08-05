@@ -4,6 +4,7 @@ import { BurgerIngredients } from "../burger-ingredients/burger-ingredients"
 import { BurgerConstructor } from "../burger-constructor/burger-constructor"
 import { useState, useEffect } from "react";
 import { data, serverLink } from "../../utils/data"
+import { getIngredients } from "../../utils/api-ingredients";
 
 export function App() {
 
@@ -24,7 +25,11 @@ export function App() {
 
 const [list, setList] = useState({
   ingredients: [],
-  serverRespond: "Loading"
+  serverRespond: ""
+})
+
+const [modal, setModal] = useState({
+  opened: false,
 })
 
   // const deleteIngredient = (_id) => {
@@ -41,27 +46,19 @@ const [list, setList] = useState({
   //   console.log(burger);
   // }, [burger.middle])
 
-  const getIngredientsList = async () => {
-    const res = await fetch(serverLink);
-    const data = await res.json();
-    setList({...list, ingredients: data.data, serverRespond: "Success"})
-  }
-
   useEffect(() => {
-    getIngredientsList();
-    console.log(list)
+    getIngredients(setList)
   }, [])
 
+  const openModal = () => {
+    setModal({opened: true})
+  }
 
-  // setTimeout(() => {console.log("222");console.log(state)}, 2000)
-        
-
-  
   return (
     <div className={styles.app}>
       <AppHeader/>
       <main className={styles.main}>
-        <BurgerIngredients {...burger} ingredientsList={list.ingredients}/>
+        <BurgerIngredients {...burger} ingredientsList={list} aa={openModal}/>
         <BurgerConstructor {...burger}/>
       </main>
     </div>
