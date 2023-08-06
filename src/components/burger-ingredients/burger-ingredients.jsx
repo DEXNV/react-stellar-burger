@@ -4,6 +4,7 @@ import styles from "./burger-ingredients.module.css"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
 import PropTypes from 'prop-types';
+import { BurgerPropTypes } from "../../utils/data";
 
 export const BurgerIngredients = (props) => {
 
@@ -32,7 +33,32 @@ export const BurgerIngredients = (props) => {
 }
 
 BurgerIngredients.propTypes = {
-    top: PropTypes.object,
-    middle: PropTypes.array,
-    bottom: PropTypes.object
-}
+    top: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        price: PropTypes.number.isRequired, 
+        image: PropTypes.string,
+        image_mobile: PropTypes.string.isRequired,
+        image_large: PropTypes.string.isRequired 
+      }).isRequired, //По непонятным мне причинам, он не подтягивает функцию
+      //Хотя с middle все ок
+      middle: PropTypes.arrayOf(PropTypes.shape({BurgerPropTypes})).isRequired,
+    
+      bottom: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        proteins: PropTypes.number.isRequired,
+        fat: PropTypes.number.isRequired,
+        carbohydrates: PropTypes.number.isRequired,
+        calories: PropTypes.number.isRequired,
+        price: PropTypes.number.isRequired, 
+        image: PropTypes.string,
+        image_mobile: PropTypes.string.isRequired,
+        image_large: PropTypes.string.isRequired })
+    }

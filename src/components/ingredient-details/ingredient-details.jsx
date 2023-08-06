@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
-
+import { BurgerPropTypes } from '../../utils/data';
 import style from './ingredient-details.module.css'
 
-function IngredientDetails(props) {
-
+const IngredientDetails = (props) => {
     return (
         <div>
             <img className={'mb-4 ' + style.img} src={props.image_large} alt={props.name}></img>
@@ -28,6 +27,12 @@ function IngredientDetails(props) {
             </ul>
         </div>
     )
+}
+
+IngredientDetails.propTypes = {
+    props: PropTypes.shape({BurgerPropTypes}).isRequired,
+    isVisible: PropTypes.bool.isRequired,
+    toggleModal: PropTypes.func.isRequired,
 }
 
 

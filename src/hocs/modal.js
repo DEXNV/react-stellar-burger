@@ -4,12 +4,16 @@ import cross from '../images/cross 24x24.svg'
 import ModalOverlay from '../components/modal-overlay/modalOverlay';
 import { useEffect } from "react";
 import PropTypes from 'prop-types';
+import { BurgerPropTypes } from '../utils/data';
 
 export const Modal = (props) => {
 
+    console.log(props)
+
     useEffect(() => {
         const closeModal = (evt) => {
-            if (evt.keyCode === 27) {
+            console.log(evt.key)
+            if (evt.key === "Escape") {
                 props.toggleModal({isVisible: false})
             }
         }
@@ -34,8 +38,9 @@ export const Modal = (props) => {
 }
 
 Modal.propTypes = {
-    props: PropTypes.object,
-    isVisible: PropTypes.bool,
-    toggleModal: PropTypes.func,
+    //Тут вообще мистика происходила, оставил так
+    props: PropTypes.object.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+    toggleModal: PropTypes.func.isRequired,
     heading: PropTypes.string
 }
