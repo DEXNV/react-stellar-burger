@@ -16,9 +16,9 @@ export function App() {
   })
 
   const [burger, setBurger] = useState({
-    top: {},
+    top: data[1],
     middle: [],
-    bottom: {},
+    bottom: data[1],
 })
 
 const [modal, setModal] = useState({
