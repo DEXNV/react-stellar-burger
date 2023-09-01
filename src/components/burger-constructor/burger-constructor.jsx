@@ -31,12 +31,18 @@ export const BurgerConstructor = () => {
         }
         case "countId": {
           let ids = []
-          ids.push(burger.buns)
+          let respond = ''
+
+          ids.push(burger.bun._id)
           burger.middle.forEach(element => {
-            ids.push(element)
+            ids.push(element._id)
           });
+
           console.log(ids)
-          return { ...state, orderid: ids.push(burger.buns)}
+          ids.push(burger.bun._id)
+          console.log(postOrder([ids]))
+
+          return { ...state, orderid: respond}
         }
         default: {
           console.log('Нет такого типа')
@@ -44,7 +50,7 @@ export const BurgerConstructor = () => {
       }
     }
 
-    const [order, setOrder] = useReducer(ingredientCount, {cost: 0, orderid: []});
+    const [order, setOrder] = useReducer(ingredientCount, {cost: 0, orderid: null});
 
     useEffect(() => {
       setOrder({ type: "countCost" })
@@ -115,20 +121,3 @@ export const BurgerConstructor = () => {
           
 }
 
-BurgerConstructor.propTypes = {
-  bun: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired, 
-    image: PropTypes.string,
-    image_mobile: PropTypes.string.isRequired,
-    image_large: PropTypes.string.isRequired 
-  }).isRequired, //По непонятным мне причинам, он не подтягивает функцию
-  //Хотя с middle все ок
-  middle: PropTypes.arrayOf(PropTypes.shape({BurgerPropTypes})).isRequired,
-}

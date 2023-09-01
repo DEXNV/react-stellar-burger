@@ -17,8 +17,8 @@ function getIngredients(setData, setBurger) {
 function postOrder(ingredients) {
     return fetch(serverOrderLink, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: {
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "ingredients": ingredients })
         }
     })
