@@ -31,7 +31,7 @@ export default class IngredientsList extends React.Component {
     countIngredient(item) {
         let count = 0
 
-        if (this.props.burger.top === item) count++
+        if (this.props.burger.buns === item) count++
 
         Object.values(this.props.burger.middle).forEach((ingredient) => {
             if(item._id === ingredient._id) 

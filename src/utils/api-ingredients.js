@@ -1,4 +1,4 @@
-import { serverLink } from "./data";
+import { serverLink, serverOrderLink } from "./data";
 
 function getIngredients(setData, setBurger) {
     setData({serverRespond: "Loading"})
@@ -6,7 +6,7 @@ function getIngredients(setData, setBurger) {
         .then(res => {return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));})
         .then(json => {
             setData({ingredients: json.data, serverRespond: "Success"})
-            setBurger({top: json.data[0], middle: json.data, bottom: json.data[0]})
+            setBurger({bun: json.data[0], middle: json.data})
         })
         .catch(error => {
             console.error(error);
@@ -14,4 +14,19 @@ function getIngredients(setData, setBurger) {
         });
 }
 
-export { getIngredients }
+function postOrder(ingredients) {
+    return fetch(serverOrderLink, {
+        method: 'POST',
+        body: {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "ingredients": ingredients })
+        }
+    })
+    .then(res => {return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));})
+    .then( res => res.order.number)
+    .catch(error => {
+        console.error(error);
+    });
+}
+
+export { getIngredients, postOrder }

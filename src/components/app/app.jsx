@@ -5,6 +5,7 @@ import { BurgerConstructor } from "../burger-constructor/burger-constructor"
 import { useState, useEffect } from "react";
 import { data, serverLink } from "../../utils/data"
 import { getIngredients } from "../../utils/api-ingredients";
+import { Context } from "../../services/Context";
 
 
 
@@ -16,28 +17,13 @@ export function App() {
   })
 
   const [burger, setBurger] = useState({
-    top: data[1],
+    bun: data[1],
     middle: [],
-    bottom: data[1],
 })
 
 const [modal, setModal] = useState({
   opened: false,
 })
-
-  // const deleteIngredient = (_id) => {
-  //   console.log("deleted: " + _id)
-  // }
-
-  // const addIngredient = (_id) => {
-  //   const engredient = data.find((item) => {if (item._id === _id) return(item)})
-  //   console.log(engredient)
-  //   setBurger({...burger, middle:[...burger.middle, engredient]})
-  // }
-
-  // useEffect(() => {
-  //   console.log(burger);
-  // }, [burger.middle])
 
   useEffect(() => {
     getIngredients(setList, setBurger)
@@ -48,12 +34,14 @@ const [modal, setModal] = useState({
   }
 
   return (
-    <div className={styles.app}>
-      <AppHeader/>
-      <main className={styles.main}>
-        <BurgerIngredients {...burger} ingredientsList={list} aa={openModal}/>
-        <BurgerConstructor {...burger}/>
-      </main>
-    </div>
+    <Context.Provider value={{ setBurger, burger, list }}>
+      <div className={styles.app}>
+        <AppHeader/>
+        <main className={styles.main}>
+          <BurgerIngredients {...burger} ingredientsList={list}/>
+          <BurgerConstructor {...burger}/>
+        </main>
+      </div>
+    </Context.Provider>
   );
 }

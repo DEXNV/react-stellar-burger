@@ -11,8 +11,8 @@ export const Ingredient = (props) => {
     return(
         <div>
             <Modal props={props} isVisible={modalActive.isVisible} toggleModal={toggleModal} heading={'Детали ингридиента'}>{IngredientDetails}</Modal>
-            <div className={styles.ingredientCard} /*onClick={() => this.addIngredient(this.props._id)}*/ onClick={() => { toggleModal({ isVisible: true }) }}>
-                <div className={styles.ingredientCounter}>{props.count !== 0  && props.count < 99 && <Counter count={props.count} size="default" extraClass="m-1"/>}
+            <div className={styles.ingredientCard} /*onClick={() => this.}*/ onClick={() => props.addIngredient(props)}>
+                <div className={styles.ingredientCounter}>{props.count !== 0  && props.count <= 99 && <Counter count={props.count} size="default" extraClass="m-1"/>}
                 {props.count !== 0  && props.count > 99 && <Counter count={props.count} size="small"/>}</div>
                 <img src={props.image} className={"ml-4 mr-4 mb-2  " + styles.ingredientImage}></img>
                 <div className={styles.ingredientPrice}>

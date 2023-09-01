@@ -8,8 +8,6 @@ import { BurgerPropTypes } from '../utils/data';
 
 export const Modal = (props) => {
 
-    console.log(props)
-
     useEffect(() => {
         const closeModal = (evt) => {
             console.log(evt.key)
