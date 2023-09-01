@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./ingredients-list.module.css";
-import Ingredient from "../ingredient/ingredient";
+import { Ingredient } from "../ingredient/ingredient";
 
 export default class IngredientsList extends React.Component {
     constructor(props) {
@@ -34,13 +34,13 @@ export default class IngredientsList extends React.Component {
         if (this.props.burger.top === item) count++
 
         Object.values(this.props.burger.middle).forEach((ingredient) => {
-            if(item === ingredient) 
+            if(item._id === ingredient._id) 
             {
-                //console.log(ingredient)
+                
                 count++
             }
         })
-
+        // console.log(item._id); console.log(this.props.burger.middle[2]._id)
         return count
     }
 
