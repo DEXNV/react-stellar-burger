@@ -39,7 +39,7 @@ const [modal, setModal] = useState({
         <AppHeader/>
         <main className={styles.main}>
           <BurgerIngredients {...burger} ingredientsList={list}/>
-          <BurgerConstructor {...burger}/>
+          <BurgerConstructor />
         </main>
       </div>
     </Context.Provider>
