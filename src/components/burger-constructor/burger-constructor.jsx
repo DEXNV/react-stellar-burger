@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import PropTypes from 'prop-types';
@@ -12,7 +12,15 @@ export const BurgerConstructor = () => {
     
     const [modalActive, toggleModal] = React.useState({isVisible: false});
 
+    const [orderID, setOrderID] = React.useState({})
+
     const burger = React.useContext(Context).burger;
+
+    const orderBtnClick = () => {
+      getOrderId()
+      toggleModal({ isVisible: true });
+      console.log(orderID)
+    }
 
     const deleteIngredient = (elem) => {
       let index = burger.middle.indexOf(elem)
@@ -20,29 +28,30 @@ export const BurgerConstructor = () => {
       burger.middle.splice(index, 1);
     }
 
+    const getOrderId = () => {
+      let ids = []
+
+      ids.push(burger.bun._id)
+      burger.middle.forEach(element => {
+        // if(element._id === "643d69a5c3f7b9001cfa093c" || element._id === "643d69a5c3f7b9001cfa0941") return 0
+        ids.push(element._id)
+      });
+
+      ids.push(burger.bun._id)
+
+      postOrder(ids).then((res) => {setOrderID(res)}).catch(error => {console.error(error);});
+    }
+
     const ingredientCount = (state, action) => {
       switch (action.type) {
         case "countCost": {
           let cost = 0
+          
+          
           burger.middle.forEach(element => {
             cost += element.price
           });
           return {...state, cost: cost + burger.bun.price * 2}
-        }
-        case "countId": {
-          let ids = []
-          let respond = null
-
-          ids.push(burger.bun._id)
-          burger.middle.forEach(element => {
-            // if(element._id === "643d69a5c3f7b9001cfa093c" || element._id === "643d69a5c3f7b9001cfa0941") return 0
-            ids.push(element._id)
-          });
-
-          ids.push(burger.bun._id)
-          /* respond = */ postOrder(ids)
-
-          return { ...state, orderid: respond}
         }
         default: {
           console.log('Нет такого типа')
@@ -50,23 +59,15 @@ export const BurgerConstructor = () => {
       }
     }
 
-    const [order, setOrder] = useReducer(ingredientCount, {cost: 0, orderid: null});
+    const [order, setOrder] = useReducer(ingredientCount, {cost: 0});
 
     useEffect(() => {
       setOrder({ type: "countCost" })
-      setOrder({ type: "countId" })
     }, [burger])
-
-    // useEffect(() => {
-    //   setOrder({ type: "countId" })
-    // }, )
-
-
-
 
         return (
             <section className={"mt-10 " + styles.elementsList}>
-              <Modal props={{number : order.orderid}} isVisible={modalActive.isVisible} toggleModal={toggleModal}>{OrderDetails}</Modal>
+              { orderID.success && <Modal props={{number : orderID.order.number}} isVisible={modalActive.isVisible} toggleModal={toggleModal}>{OrderDetails}</Modal>}
               <div className={styles.burgerDiv + " pt-5 pb-5 pl-4"}>
                 <div className={styles.elementBox}>
                 <ConstructorElement
@@ -114,7 +115,7 @@ export const BurgerConstructor = () => {
                   <p className="text text_type_digits-medium">{order.cost}</p> 
                   <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={() => {toggleModal({ isVisible: true })}}>Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="large" onClick={orderBtnClick}>Оформить заказ</Button>
               </div>
             </section>
           )

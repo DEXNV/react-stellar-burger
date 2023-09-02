@@ -231,3 +231,4 @@ export const BurgerPropTypes = () => {
 
 export const serverLink = "https://norma.nomoreparties.space/api/ingredients"
 export const serverOrderLink = "https://norma.nomoreparties.space/api/orders"
+export const checkResponse = (res) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err))

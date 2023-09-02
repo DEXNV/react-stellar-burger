@@ -26,7 +26,10 @@ const [modal, setModal] = useState({
 })
 
   useEffect(() => {
-    getIngredients(setList, setBurger)
+    getIngredients(setList, setBurger).catch(error => {
+      console.error(error);
+      setBurger({serverRespond: "Error"})
+  });
   }, [])
 
   const openModal = () => {
