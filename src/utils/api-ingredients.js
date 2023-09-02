@@ -15,12 +15,11 @@ function getIngredients(setData, setBurger) {
 }
 
 function postOrder(ingredients) {
+    console.log(ingredients)
     return fetch(serverOrderLink, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: {
-            body: JSON.stringify({ "ingredients": ingredients })
-        }
+        headers: { "Content-Type": "application/json; charset=utf-8" },
+        data: JSON.stringify({ "ingredients": ingredients })
     })
     .then(res => {return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));})
     .then( res => res.order.number)

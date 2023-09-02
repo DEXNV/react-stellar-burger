@@ -31,16 +31,16 @@ export const BurgerConstructor = () => {
         }
         case "countId": {
           let ids = []
-          let respond = ''
+          let respond = null
 
           ids.push(burger.bun._id)
           burger.middle.forEach(element => {
+            // if(element._id === "643d69a5c3f7b9001cfa093c" || element._id === "643d69a5c3f7b9001cfa0941") return 0
             ids.push(element._id)
           });
 
-          console.log(ids)
           ids.push(burger.bun._id)
-          console.log(postOrder([ids]))
+          /* respond = */ postOrder(ids)
 
           return { ...state, orderid: respond}
         }
