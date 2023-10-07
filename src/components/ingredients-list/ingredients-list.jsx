@@ -11,6 +11,8 @@ export default class IngredientsList extends React.Component {
         this.sortIngredients()
     }
 
+    
+
     sortIngredient(list, type) {
         return list.map((item) => {
             if (item.type === type) return(item)
@@ -47,9 +49,8 @@ export default class IngredientsList extends React.Component {
     
 
     render() {
-        
+        console.log(this.props.burger);
         return (
-            <>
                 <div className={styles.ingredientsList + " custom-scroll"}>
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="buns" key={"buns"}>Булки</p>
                     {this.sortedIngredients.buns.map((item, i) => {return <Ingredient {...item}  addIngredient={this.props.addIngredient} count={this.countIngredient(item)} key={"bun-" + (i+1)}/>})}
@@ -60,7 +61,6 @@ export default class IngredientsList extends React.Component {
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="mains" key={"mains"}>Начинка</p>
                     {this.sortedIngredients.main.map((item, i) => {return <Ingredient {...item} addIngredient={this.props.addIngredient} count={this.countIngredient(item)} key={"main-" + (i+1)}/>})}
                 </div>
-            </>
         )
     }
 }

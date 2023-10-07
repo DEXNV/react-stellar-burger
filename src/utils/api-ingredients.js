@@ -6,7 +6,7 @@ function getIngredients(setData, setBurger) {
         .then((res) => checkResponse(res))
         .then(json => {
             setData({ingredients: json.data, serverRespond: "Success"})
-            setBurger({bun: json.data[0], middle: json.data})
+            setBurger({bun: json.data[0], middle: json.data.filter((item) => item.type !== "bun")})
         })
 }
 

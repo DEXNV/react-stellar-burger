@@ -32,8 +32,6 @@ const [modal, setModal] = useState({
   });
   }, [])
 
-  
-
   return (
     <Context.Provider value={{ setBurger, burger, list }}>
       <div className={styles.app}>

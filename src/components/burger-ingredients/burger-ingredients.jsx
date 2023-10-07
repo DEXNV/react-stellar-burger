@@ -7,23 +7,25 @@ import PropTypes from 'prop-types';
 import { BurgerPropTypes } from "../../utils/data";
 import { Context } from "../../services/Context";
 
-export const BurgerIngredients = (props) => {
+export const BurgerIngredients = () => {
 
     const [current, setCurrent] = React.useState('one')
 
-    const { burger, setBurger } = React.useContext(Context);
+    // const { burger, setBurger } = React.useContext(Context).burger;
 
-    const addIngredient = (ingredient) => {
-        if (ingredient.type == "bun") {
-            setBurger({ ...burger, bun: ingredient})
-        } else {
-            const newMiddle = burger.middle.push(ingredient)
-            setBurger({ ...burger, newMiddle}); console.log(ingredient)
-        }
-    }
+    const list = React.useContext(Context).list;
+    const burger = React.useContext(Context).burger
+
+    // const addIngredient = (ingredient) => {
+    //     if (ingredient.type == "bun") {
+    //         setBurger({ ...burger, bun: ingredient})
+    //     } else {
+    //         const newMiddle = burger.middle.push(ingredient)
+    //         setBurger({ ...burger, newMiddle}); console.log(ingredient)
+    //     }
+    // }
     
     return(
-        <>
             <section>
                 <p className="text text_type_main-large">Соберите бургер</p>
                 <div className={"mt-5 mb-10 " + styles.tabs}>
@@ -37,26 +39,7 @@ export const BurgerIngredients = (props) => {
                         Начинки
                     </Tab></a>
                 </div> 
-                {props.ingredientsList.serverRespond === "Success" && <IngredientsList ingredients={props.ingredientsList.ingredients} burger={props} addIngredient={addIngredient}></IngredientsList>}
+                {list.serverRespond === "Success" && <IngredientsList ingredients={list.ingredients} burger={burger}></IngredientsList>}
             </section>
-        </>
     )
 }
-
-BurgerIngredients.propTypes = {
-    bun: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired, 
-        image: PropTypes.string,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired 
-      }).isRequired, //По непонятным мне причинам, он не подтягивает функцию
-      //Хотя с middle все ок
-      middle: PropTypes.arrayOf(PropTypes.shape({BurgerPropTypes})).isRequired,
-    }
