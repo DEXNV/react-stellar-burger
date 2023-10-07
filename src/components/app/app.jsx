@@ -32,9 +32,7 @@ const [modal, setModal] = useState({
   });
   }, [])
 
-  const openModal = () => {
-    setModal({opened: true})
-  }
+  
 
   return (
     <Context.Provider value={{ setBurger, burger, list }}>

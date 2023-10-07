@@ -6,16 +6,21 @@ import { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { BurgerPropTypes } from '../utils/data';
 
+const closeModalOnKey = (evt, props, key) => {
+    console.log(evt.key)
+    if (evt.key === key) {
+        closeModal(props)
+    }
+}
+
+const closeModal = (props) => {
+    props.toggleModal({isVisible: false})
+}
+
 export const Modal = (props) => {
 
     useEffect(() => {
-        const closeModal = (evt) => {
-            console.log(evt.key)
-            if (evt.key === "Escape") {
-                props.toggleModal({isVisible: false})
-            }
-        }
-        window.addEventListener('keydown', closeModal)
+        window.addEventListener('keydown', (evt) => closeModalOnKey(evt, props, "Escape"))
         return () => window.removeEventListener('keydown', closeModal)
     }, []);
 
@@ -26,12 +31,12 @@ export const Modal = (props) => {
                 <div className={styles.title}>
                     <h1 className="text text_type_main-large">{props.heading}</h1>
                     <img className={styles.icon} src={cross}
-                        onClick={() => (props.toggleModal({isVisible: false}))}>
+                        onClick={() => closeModal(props)}>
                     </img>
                 </div>
                 {props.children(props.props)}
             </section>
-        </div>, document.querySelector('#root')
+        </div>, document.querySelector('#modals')
     )
 }
 
