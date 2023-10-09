@@ -6,23 +6,27 @@ import { useEffect } from "react";
 import PropTypes from 'prop-types';
 import { BurgerPropTypes } from '../utils/data';
 
-const closeModalOnKey = (evt, props, key) => {
-    console.log(evt.key)
-    if (evt.key === key) {
-        closeModal(props)
-    }
-}
-
-const closeModal = (props) => {
-    props.toggleModal({isVisible: false})
-}
-
 export const Modal = (props) => {
 
+    const closeModal = () => {
+        props.toggleModal({isVisible: false})
+    }
+
+    const isOpen = props.isVisible
+
     useEffect(() => {
-        window.addEventListener('keydown', (evt) => closeModalOnKey(evt, props, "Escape"))
-        return () => window.removeEventListener('keydown', closeModal)
-    }, []);
+        function closeByEscape(evt) {
+            if(evt.key === 'Escape') {
+              closeModal();
+            }
+          }
+          if(isOpen) {
+            document.addEventListener('keydown', closeByEscape);
+            return () => {
+              document.removeEventListener('keydown', closeByEscape);
+            }
+        }
+    }, [isOpen]) 
 
     return createPortal(
         <div className={props.isVisible ? styles.popup_opened : styles.popup_closed} style={{ visibility: props.isVisible ? 'visible' : 'hidden'}}>
@@ -30,7 +34,7 @@ export const Modal = (props) => {
             <section className={'pt-10 pb-15 ' + styles.section}>
                 <div className={styles.title}>
                     <h1 className="text text_type_main-large">{props.heading}</h1>
-                    <CloseIcon type="primary" className={styles.icon} onClick={() => closeModal(props)}/>
+                    <CloseIcon type="primary" className={styles.icon} onClick={closeModal}/>
                 </div>
                 {props.children}
             </section>

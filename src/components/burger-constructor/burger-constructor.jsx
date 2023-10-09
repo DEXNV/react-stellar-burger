@@ -19,7 +19,6 @@ export const BurgerConstructor = () => {
     const orderBtnClick = () => {
       getOrderId()
       toggleModal({ isVisible: true });
-      console.log(orderID)
     }
 
     const deleteIngredient = (elem) => {
@@ -40,6 +39,7 @@ export const BurgerConstructor = () => {
       ids.push(burger.bun._id)
 
       postOrder(ids).then((res) => {setOrderID(res)}).catch(error => {console.error(error);});
+      console.log(orderID)
     }
 
     const ingredientCount = (state, action) => {
@@ -67,7 +67,7 @@ export const BurgerConstructor = () => {
 
         return (
             <section className={"mt-10 " + styles.elementsList}>
-              { orderID.success && <Modal props={{number : orderID.order.number}} isVisible={modalActive.isVisible} toggleModal={toggleModal}>{OrderDetails}</Modal>}
+              { orderID.success && <Modal props={{number : orderID.order.number}} isVisible={modalActive.isVisible} toggleModal={toggleModal}>{orderID.success && <OrderDetails {...orderID} />  }</Modal>}
               <div className={styles.burgerDiv + " pt-5 pb-5 pl-4"}>
                 <div className={styles.elementBox}>
                 <ConstructorElement

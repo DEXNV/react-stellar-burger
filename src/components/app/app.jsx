@@ -37,7 +37,7 @@ const [modal, setModal] = useState({
       <div className={styles.app}>
         <AppHeader/>
         <main className={styles.main}>
-          <BurgerIngredients {...burger} ingredientsList={list}/>
+          <BurgerIngredients />
           <BurgerConstructor />
         </main>
       </div>
