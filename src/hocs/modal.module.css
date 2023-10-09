@@ -50,3 +50,13 @@
     flex-direction: column;
     align-items: center;
 }
+
+.popup_closed {
+    transition: .2s ease-in;
+    opacity: 0;
+}
+
+.popup_opened {
+    opacity: 1;
+    transition: visibility, opacity .2s linear;
+}
