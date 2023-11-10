@@ -12,13 +12,12 @@ const initialState = {
   middle: [],
 };
 
-
-
 export const setBurgerIngredients = (state = initialState, action) => {
   switch (action.type) {
     case ADD_BURGER_INGREDIENT: {
       const newIngredient = action.ingredient
       newIngredient.key = state.middle.length
+      setTimeout(() => console.log(state.middle), 2000) 
       //console.log(newIngredient.key)
       //console.log(state.middle[newIngredient.key - 1]) 
       // if (state.middle[0] === defaultMain || !state.middle[0]) {
@@ -27,6 +26,7 @@ export const setBurgerIngredients = (state = initialState, action) => {
       //     middle: [newIngredient],
       //   };
       // } else {
+        console.log(newIngredient)
         return {
           ...state,
           middle: [...state.middle, newIngredient],

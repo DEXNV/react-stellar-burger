@@ -76,9 +76,9 @@ export const BurgerConstructor = () => {
     const [order, setOrder] = useReducer(ingredientCount, {cost: 0});
 
     const moveIngredient = (dragged, hover) => {
+
       const newBurgerMiddle = [...burger.middle]
-      newBurgerMiddle.splice(dragged.key, 1)
-      newBurgerMiddle.splice(hover.key, 0, dragged)
+      newBurgerMiddle.splice(hover, 0, newBurgerMiddle.splice(dragged.key, 1)[0]);
       dispatch(changeBurgerMiddle(newBurgerMiddle))
     }
 
@@ -105,7 +105,7 @@ export const BurgerConstructor = () => {
                   {burger.middle.map((item, i) => { 
                     let first = ""
                     if(i !== 0) first = " mt-4" 
-                    return (<Mains props={deleteIngredient} first={first} item={item} i={i} deleteIngredient={deleteIngredient} key={"ingredient " + i}
+                    return (<Mains props={deleteIngredient} first={first} item={item} deleteIngredient={deleteIngredient} key={i} index={i}
                     moveIngredient={moveIngredient} />)
                   })}
                 </div>

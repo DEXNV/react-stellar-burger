@@ -5,12 +5,13 @@ import { deleteIngredient } from "../burger-constructor/burger-constructor";
 import { useDrag, useDrop } from "react-dnd";
 import uuid from "react-uuid";
 
-export const Mains = ({ deleteIngredient, item, first, moveIngredient }) => {
+export const Mains = ({ deleteIngredient, item, first, moveIngredient, index }) => {
 
   const [, drop] = useDrop({
     accept: "ingredient",
     hover: (itemNew, monitor) => {
-        moveIngredient(item, itemNew)
+      console.log(index)
+        moveIngredient(itemNew, index)
     }
   });
 
@@ -18,13 +19,13 @@ export const Mains = ({ deleteIngredient, item, first, moveIngredient }) => {
 
   const [{ isDrag }, drag] = useDrag({
     type: "ingredient",
-    item: item,
+    item: {index: index},
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
     }),
   });
 
-  const opacity = isDrag ? 1 : 1;
+  const opacity = isDrag ? 0 : 1;
 
   const ref = useRef(null);
 

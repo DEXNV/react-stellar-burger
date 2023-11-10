@@ -11,7 +11,7 @@ export const Ingredient = (props) => {
 
     const dispatch = useDispatch();
 
-    const ingredient= props.ingredient
+    const ingredient = props.ingredient
 
     const [{isDrag}, dragRef] = useDrag({
         type: "newIngredient",
