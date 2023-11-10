@@ -6,12 +6,14 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../../services/actions/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { useDrag } from "react-dnd";
+import uuid from "react-uuid";
 
 export const Ingredient = (props) => {
 
     const dispatch = useDispatch();
 
     const ingredient = props.ingredient
+    ingredient.uuid = uuid()
 
     const [{isDrag}, dragRef] = useDrag({
         type: "newIngredient",
