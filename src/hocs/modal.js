@@ -1,15 +1,21 @@
-import { createPortal } from 'react-dom';
-import styles from './modal.module.css'
-import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from '../components/modal-overlay/modalOverlay';
+import { createPortal } from "react-dom";
+import styles from "./modal.module.css";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import ModalOverlay from "../components/modal-overlay/modalOverlay";
 import { useEffect } from "react";
-import PropTypes from 'prop-types';
-import { BurgerPropTypes } from '../utils/data';
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal as closeModalForStorage } from "../services/actions/modal";
+import IngredientDetails from "../components/ingredient-details/ingredient-details";
+import OrderDetails from "../components/order-details/order-details";
 
 export const Modal = (props) => {
 
-    const closeModal = () => {
-        props.toggleModal({isVisible: false})
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+      dispatch(closeModalForStorage())
+      props.toggleModal({isVisible: false})
     }
 
     const isOpen = props.isVisible
@@ -30,7 +36,7 @@ export const Modal = (props) => {
 
     return createPortal(
         <div className={props.isVisible ? styles.popup_opened : styles.popup_closed} style={{ visibility: props.isVisible ? 'visible' : 'hidden'}}>
-            <ModalOverlay toggleModal={props.toggleModal} />
+            <ModalOverlay toggleModal={closeModal} />
             <section className={'pt-10 pb-15 ' + styles.section}>
                 <div className={styles.title}>
                     <h1 className="text text_type_main-large">{props.heading}</h1>
@@ -44,7 +50,6 @@ export const Modal = (props) => {
 
 Modal.propTypes = {
     //Тут вообще мистика происходила, оставил так
-    props: PropTypes.object.isRequired,
     isVisible: PropTypes.bool.isRequired,
     toggleModal: PropTypes.func.isRequired,
     heading: PropTypes.string

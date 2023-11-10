@@ -1,0 +1,14 @@
+.dragDots{
+    height: 24px;
+    width: 24px;
+    position: relative;
+    border: none;
+    background: none;
+    background-image: url("../../images/dots.svg");
+}
+
+.elementBox {
+    display: flex;
+    align-items: center;
+    transition: opacity .2s;
+}

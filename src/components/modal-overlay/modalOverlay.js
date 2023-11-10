@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export default function ModalOverlay(props) {
     return (
         <div className={ModalOverlayStyles.main}
-        onClick={() => {props.toggleModal({ isVisible: false })}}></div>
+        onClick={() => {props.toggleModal()}}></div>
     )
 }
 

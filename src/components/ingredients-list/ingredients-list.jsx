@@ -5,7 +5,6 @@ import { Ingredient } from "../ingredient/ingredient";
 const IngredientsList = (props) => {
     
     const [sortedIngredients, setIngredients] = React.useState({})
-    
 
     const sortIngredient = (list, type) => {
         return list.map((item) => {
@@ -40,14 +39,10 @@ const IngredientsList = (props) => {
         return count
     }
 
-    
-
-
         return (
-            
                 <div className={styles.ingredientsList + " custom-scroll"}>
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="buns" key={"buns"}>Булки</p>
-                    {sortedIngredients.buns && (sortedIngredients.buns.map((item, i) => {return <Ingredient ingredient={item} addIngredient={props.addIngredient} count={countIngredient(item)} key={"bun-" + (i+1)}/>}))}
+                    {sortedIngredients.buns && (sortedIngredients.buns.map((item, i) => {return <Ingredient ingredient={item} addIngredient={props.addIngredient} count={countIngredient(item)} key={"bun-" + (i+1)} />}))}
 
                     <p className={"mb-6 text text_type_main-medium " + styles.ingredientsType} id="sauces" key={"sauces"}>Соусы</p>
                     {sortedIngredients.sauces && (sortedIngredients.sauces.map((item, i) => {return <Ingredient ingredient={item} addIngredient={props.addIngredient} count={countIngredient(item)} key={"sauce-" + (i+1)}/>}))}

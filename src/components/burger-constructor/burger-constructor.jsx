@@ -1,30 +1,46 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
-import PropTypes from 'prop-types';
 import { Modal } from "../../hocs/modal";
 import OrderDetails from "../order-details/order-details";
-import { BurgerPropTypes } from "../../utils/data";
-import { Context } from "../../services/Context.js";
 import { postOrder } from "../../utils/api-ingredients";
+import { useSelector, useDispatch } from "react-redux";
+import { openModal } from "../../services/actions/modal";
+import { useDrop, useDrag } from "react-dnd";
+import { addBurgerIngredient, deleteBurgerIngredient, changeBurgerMiddle } from "../../services/actions/burger-construcor";
+import { Mains } from "../mains/mains";
+import uuid from 'react-uuid';
 
-export const BurgerConstructor = () => {
-    
+export const BurgerConstructor = () => { 
+
+    const dispatch = useDispatch(); 
+
+    const { burger, orderState } = useSelector(store => ({
+      burger: store.burger,
+      orderState: store.order
+    })) 
+
     const [modalActive, toggleModal] = React.useState({isVisible: false});
 
-    const [orderID, setOrderID] = React.useState({})
+    const [, drop] = useDrop({
+      accept: "newIngredient",
+      drop(item) {
+        item.uuid = uuid()
+        console.log(item)
+        dispatch(addBurgerIngredient(item))
+      },
+    });
 
-    const burger = React.useContext(Context).burger;
+
+    
 
     const orderBtnClick = () => {
       getOrderId()
       toggleModal({ isVisible: true });
     }
 
-    const deleteIngredient = (elem) => {
-      let index = burger.middle.indexOf(elem)
-      console.log(elem)
-      burger.middle.splice(index, 1);
+    const deleteIngredient = (item) => {
+      dispatch(deleteBurgerIngredient(item))
     }
 
     const getOrderId = () => {
@@ -32,22 +48,20 @@ export const BurgerConstructor = () => {
 
       ids.push(burger.bun._id)
       burger.middle.forEach(element => {
-        // if(element._id === "643d69a5c3f7b9001cfa093c" || element._id === "643d69a5c3f7b9001cfa0941") return 0
         ids.push(element._id)
       });
 
       ids.push(burger.bun._id)
+      dispatch(postOrder(ids))
+      dispatch(openModal({}, 'order'))
 
-      postOrder(ids).then((res) => {setOrderID(res)}).catch(error => {console.error(error);});
-      console.log(orderID)
+      console.log(burger)
     }
-
+    
     const ingredientCount = (state, action) => {
       switch (action.type) {
         case "countCost": {
           let cost = 0
-          
-          
           burger.middle.forEach(element => {
             cost += element.price
           });
@@ -61,14 +75,21 @@ export const BurgerConstructor = () => {
 
     const [order, setOrder] = useReducer(ingredientCount, {cost: 0});
 
+    const moveIngredient = (dragged, hover) => {
+      const newBurgerMiddle = [...burger.middle]
+      newBurgerMiddle.splice(dragged.key, 1)
+      newBurgerMiddle.splice(hover.key, 0, dragged)
+      dispatch(changeBurgerMiddle(newBurgerMiddle))
+    }
+
     useEffect(() => {
       setOrder({ type: "countCost" })
     }, [burger])
 
         return (
             <section className={"mt-10 " + styles.elementsList}>
-              { orderID.success && <Modal props={{number : orderID.order.number}} isVisible={modalActive.isVisible} toggleModal={toggleModal}>{orderID.success && <OrderDetails {...orderID} />  }</Modal>}
-              <div className={styles.burgerDiv + " pt-5 pb-5 pl-4"}>
+              { orderState.order.success && <Modal props={{number : orderState.order.number}} isVisible={modalActive.isVisible} toggleModal={toggleModal}>{orderState.orderSuccess && <OrderDetails {...orderState.order} />  }</Modal>}
+              <div className={styles.burgerDiv + " pt-5 pb-5 pl-4"} ref={drop}>
                 <div className={styles.elementBox}>
                 <ConstructorElement
                   type="top"
@@ -80,23 +101,13 @@ export const BurgerConstructor = () => {
                 />
                 </div>
 
-                <div className={styles.elementsListMain + " custom-scroll"}>
-                {burger.middle.map((item, i) => {
-
-                  let first = ""
-                  if(i !== 0) first = " mt-4" 
-
-                  return (<div className={styles.elementBox + first} key={"constructor-main " + i}>
-                  <button className={styles.dragDots}/>
-                  <ConstructorElement 
-                    text={burger.middle[i].name} 
-                    price={burger.middle[i].price} 
-                    thumbnail={burger.middle[i].image} 
-                    key={"ingredient " + i} 
-                    extraClass="ml-2 mr-2"
-                  // handleClose={() => this.burger.deleteIngredient(i)}
-                  /></div>)
-                })}
+                <div className={styles.elementsListMain + " custom-scroll"} >
+                  {burger.middle.map((item, i) => { 
+                    let first = ""
+                    if(i !== 0) first = " mt-4" 
+                    return (<Mains props={deleteIngredient} first={first} item={item} i={i} deleteIngredient={deleteIngredient} key={"ingredient " + i}
+                    moveIngredient={moveIngredient} />)
+                  })}
                 </div>
 
                 <div className={styles.elementBox}>
@@ -121,4 +132,3 @@ export const BurgerConstructor = () => {
           )
           
 }
-

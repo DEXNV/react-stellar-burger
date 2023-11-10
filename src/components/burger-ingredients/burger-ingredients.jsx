@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react";
 import React from "react";
+import { useSelector } from "react-redux";
 import styles from "./burger-ingredients.module.css"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
-import PropTypes from 'prop-types';
-import { BurgerPropTypes } from "../../utils/data";
-import { Context } from "../../services/Context";
 
 export const BurgerIngredients = () => {
 
@@ -13,17 +10,10 @@ export const BurgerIngredients = () => {
 
     // const { burger, setBurger } = React.useContext(Context).burger;
 
-    const list = React.useContext(Context).list;
-    const burger = React.useContext(Context).burger
-
-    // const addIngredient = (ingredient) => {
-    //     if (ingredient.type == "bun") {
-    //         setBurger({ ...burger, bun: ingredient})
-    //     } else {
-    //         const newMiddle = burger.middle.push(ingredient)
-    //         setBurger({ ...burger, newMiddle}); console.log(ingredient)
-    //     }
-    // }
+    const { list, burger } = useSelector(store => ({
+        list: store.ingredients,
+        burger: store.burger,
+    })) 
     
     return(
             <section>

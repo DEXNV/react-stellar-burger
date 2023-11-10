@@ -1,10 +1,16 @@
-.ingredientCard {
+.ingredientCard, .ingredientCardHidden {
     max-width: 272px;
     max-height: 208px;
     display: flex;
     justify-content: center;
     width: 100%;
     flex-direction: column;
+    transition: all .3s linear;
+    opacity: 1;
+}
+
+.ingredientCardHidden {
+    opacity: 0;
 }
 
 .ingredientImage {
