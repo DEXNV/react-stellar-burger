@@ -115,7 +115,7 @@ export const BurgerConstructor = () => {
                   {burger.middle.map((item, i) => { 
                     let first = ""
                     if(i !== 0) first = " mt-4" 
-                    return (<Mains props={deleteIngredient} first={first} item={item} deleteIngredient={deleteIngredient} key={i} index={i}
+                    return (<Mains props={deleteIngredient} first={first} item={item} deleteIngredient={deleteIngredient} key={item.key} index={i}
                     moveIngredient={moveIngredient}/>)
                   })}
                 </div>
