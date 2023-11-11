@@ -78,7 +78,7 @@ export const BurgerConstructor = () => {
     const moveIngredient = (dragged, hover) => {
 
       const newBurgerMiddle = [...burger.middle]
-      newBurgerMiddle.splice(hover, 0, newBurgerMiddle.splice(dragged.key, 1)[0]);
+      newBurgerMiddle.splice(hover, 0, newBurgerMiddle.splice(dragged, 1)[0]);
       dispatch(changeBurgerMiddle(newBurgerMiddle))
     }
 

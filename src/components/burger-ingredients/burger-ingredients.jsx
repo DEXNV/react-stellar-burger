@@ -29,7 +29,7 @@ export const BurgerIngredients = () => {
                         Начинки
                     </Tab></a>
                 </div> 
-                {list.serverRespond === "Success" && <IngredientsList respond={list.serverRespond} ingredients={list.ingredients} burger={burger}></IngredientsList>}
+                {list.serverRespond === "Success" && <IngredientsList respond={list.serverRespond} ingredients={list.ingredients} burger={burger} setTabNum={setCurrent}></IngredientsList>}
             </section>
     )
 }

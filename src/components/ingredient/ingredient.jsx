@@ -13,7 +13,7 @@ export const Ingredient = (props) => {
     const dispatch = useDispatch();
 
     const ingredient = props.ingredient
-    ingredient.uuid = uuid()
+    // ingredient.uuid = uuid()
 
     const [{isDrag}, dragRef] = useDrag({
         type: "newIngredient",

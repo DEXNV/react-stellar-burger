@@ -10,8 +10,8 @@ export const Mains = ({ deleteIngredient, item, first, moveIngredient, index }) 
   const [, drop] = useDrop({
     accept: "ingredient",
     hover: (itemNew, monitor) => {
-      console.log(itemNew)
-        moveIngredient(itemNew, index)
+      console.log(index)
+        moveIngredient(index, itemNew)
     }
   });
 
