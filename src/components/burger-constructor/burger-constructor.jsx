@@ -7,9 +7,10 @@ import { postOrder } from "../../utils/api-ingredients";
 import { useSelector, useDispatch } from "react-redux";
 import { openModal } from "../../services/actions/modal";
 import { useDrop, useDrag } from "react-dnd";
-import { addBurgerIngredient, deleteBurgerIngredient, changeBurgerMiddle } from "../../services/actions/burger-construcor";
+import { addBurgerIngredient, deleteBurgerIngredient, changeBurgerMiddle, changeBurgerBuns } from "../../services/actions/burger-construcor";
 import { Mains } from "../mains/mains";
 import uuid from 'react-uuid';
+import defaultImage from "../../images/defaultImage.png"
 
 export const BurgerConstructor = () => { 
 
@@ -20,13 +21,26 @@ export const BurgerConstructor = () => {
       orderState: store.order
     })) 
 
+    const defaultBuns = burger.bun._id == "0"
+    let bunsImage
+    let bunsCost
+    if(defaultBuns){
+      bunsImage = defaultImage 
+      bunsCost = "?"
+    }
+    else {
+      bunsImage = burger.bun.image
+      bunsCost = burger.bun.price
+    }
+
     const [modalActive, toggleModal] = React.useState({isVisible: false});
 
     const [, drop] = useDrop({
       accept: "newIngredient",
       drop(item) {
-        console.log(item)
-        dispatch(addBurgerIngredient(item))
+        (item.type === "bun")? 
+        dispatch(changeBurgerBuns(item)):
+        dispatch(addBurgerIngredient({...item, key: uuid()}))
       },
     });
 
@@ -75,10 +89,7 @@ export const BurgerConstructor = () => {
     const [order, setOrder] = useReducer(ingredientCount, {cost: 0});
 
     const moveIngredient = (dragged, hover) => {
-
-      const newBurgerMiddle = [...burger.middle]
-        newBurgerMiddle.splice(hover.index, 0, newBurgerMiddle.splice(dragged, 1)[0]);
-        dispatch(changeBurgerMiddle(newBurgerMiddle))   
+        dispatch(changeBurgerMiddle({dragIndex: dragged, hoverIndex: hover}))   
     }
 
     useEffect(() => {
@@ -94,8 +105,8 @@ export const BurgerConstructor = () => {
                   type="top"
                   isLocked={true}
                   text={burger.bun.name + " (верх)"}
-                  price={burger.bun.price}
-                  thumbnail={burger.bun.image}
+                  price={bunsCost}
+                  thumbnail={bunsImage}
                   extraClass="ml-8"
                 />
                 </div>
@@ -105,7 +116,7 @@ export const BurgerConstructor = () => {
                     let first = ""
                     if(i !== 0) first = " mt-4" 
                     return (<Mains props={deleteIngredient} first={first} item={item} deleteIngredient={deleteIngredient} key={i} index={i}
-                    moveIngredient={moveIngredient} uuid={item.uuid}/>)
+                    moveIngredient={moveIngredient}/>)
                   })}
                 </div>
 
@@ -114,8 +125,8 @@ export const BurgerConstructor = () => {
                   type="bottom"
                   isLocked={true}
                   text={burger.bun.name + " (низ)"}
-                  price={burger.bun.price}
-                  thumbnail={burger.bun.image}
+                  price={bunsCost}
+                  thumbnail={bunsImage}
                   extraClass="ml-8"
                 />
                 </div>

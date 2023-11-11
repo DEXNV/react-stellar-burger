@@ -10,7 +10,6 @@ function getIngredients() {
         .then((res) => checkResponse(res))
         .then(json => {
             dispatch(ingredientListSuccess(json))
-            dispatch(changeBurgerBuns(json.data[0]))
         })
         .catch((err) => {
             console.log(err)
