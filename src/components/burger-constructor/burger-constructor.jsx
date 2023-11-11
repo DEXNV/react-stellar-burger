@@ -25,7 +25,6 @@ export const BurgerConstructor = () => {
     const [, drop] = useDrop({
       accept: "newIngredient",
       drop(item) {
-        item.uuid = uuid()
         console.log(item)
         dispatch(addBurgerIngredient(item))
       },
@@ -78,8 +77,16 @@ export const BurgerConstructor = () => {
     const moveIngredient = (dragged, hover) => {
 
       const newBurgerMiddle = [...burger.middle]
-      newBurgerMiddle.splice(hover, 0, newBurgerMiddle.splice(dragged, 1)[0]);
-      dispatch(changeBurgerMiddle(newBurgerMiddle))
+      
+      if (dragged === hover.index) {
+        console.log(hover.index)
+        return 
+      }
+      else {
+        newBurgerMiddle.splice(hover.index, 0, newBurgerMiddle.splice(dragged, 1)[0]);
+        dispatch(changeBurgerMiddle(newBurgerMiddle))
+      } 
+      
     }
 
     useEffect(() => {
@@ -106,7 +113,7 @@ export const BurgerConstructor = () => {
                     let first = ""
                     if(i !== 0) first = " mt-4" 
                     return (<Mains props={deleteIngredient} first={first} item={item} deleteIngredient={deleteIngredient} key={i} index={i}
-                    moveIngredient={moveIngredient} />)
+                    moveIngredient={moveIngredient} uuid={item.uuid}/>)
                   })}
                 </div>
 

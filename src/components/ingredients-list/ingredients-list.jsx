@@ -45,9 +45,11 @@ const IngredientsList = (props) => {
         const mains = ingredientsDiv[2].getBoundingClientRect()
 
         //console.log("Булки: " + ( buns.bottom > (buns.height + 54)) + " Соусы: " + (sauces.bottom > (sauces.height + 54)) + " Начинки: " + (mains.bottom > (mains.height + 54)))
-        if(buns.bottom > (buns.height + 54)) props.setTabNum("one")
-        else if(sauces.bottom > (sauces.height + 54)) props.setTabNum("two")
-        else if(mains.bottom > (mains.height + 54)) props.setTabNum("three")
+        if(buns.top > (buns.height/2 + 84 - window.pageYOffset)) props.setTabNum("one")
+        else if(sauces.top > (sauces.height)) props.setTabNum("two")
+        else if(sauces.top < sauces.height/2 - 84 - window.pageYOffset) props.setTabNum("three")
+        else props.setTabNum("two")
+        console.log(window.pageYOffset)
     }
 
       if (container != null ) { 

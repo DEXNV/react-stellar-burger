@@ -10,8 +10,22 @@ export const Mains = ({ deleteIngredient, item, first, moveIngredient, index }) 
   const [, drop] = useDrop({
     accept: "ingredient",
     hover: (itemNew, monitor) => {
-      console.log(index)
+        if (!ref.current) return;
+        if(index === itemNew.index) return 
+
+        const hoverBoundRect = ref.current?.getBoundingClientRect()
+        const hoverMiddleY = (hoverBoundRect.bottom - hoverBoundRect.top) / 2
+
+        const clientOffset = monitor.getClientOffset()
+        const hoverClientY = clientOffset.y - hoverBoundRect.top
+
+        if (index.index < itemNew && hoverClientY < hoverMiddleY) return;
+        if (itemNew > index.index && hoverClientY > hoverMiddleY) return;
+        console.log(hoverBoundRect)
+        
         moveIngredient(index, itemNew)
+
+        item.index = index.index
     }
   });
 
