@@ -77,16 +77,8 @@ export const BurgerConstructor = () => {
     const moveIngredient = (dragged, hover) => {
 
       const newBurgerMiddle = [...burger.middle]
-      
-      if (dragged === hover.index) {
-        console.log(hover.index)
-        return 
-      }
-      else {
         newBurgerMiddle.splice(hover.index, 0, newBurgerMiddle.splice(dragged, 1)[0]);
-        dispatch(changeBurgerMiddle(newBurgerMiddle))
-      } 
-      
+        dispatch(changeBurgerMiddle(newBurgerMiddle))   
     }
 
     useEffect(() => {

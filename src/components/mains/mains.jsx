@@ -11,21 +11,21 @@ export const Mains = ({ deleteIngredient, item, first, moveIngredient, index }) 
     accept: "ingredient",
     hover: (itemNew, monitor) => {
         if (!ref.current) return;
-        if(index === itemNew.index) return 
+        if(index == itemNew.index) return 
 
-        const hoverBoundRect = ref.current?.getBoundingClientRect()
-        const hoverMiddleY = (hoverBoundRect.bottom - hoverBoundRect.top) / 2
+        const hoverBoundingRect = ref.current?.getBoundingClientRect()
+        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
 
         const clientOffset = monitor.getClientOffset()
-        const hoverClientY = clientOffset.y - hoverBoundRect.top
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top
 
-        if (index.index < itemNew && hoverClientY < hoverMiddleY) return;
-        if (itemNew > index.index && hoverClientY > hoverMiddleY) return;
-        console.log(hoverBoundRect)
+        if (itemNew.index < index  && hoverClientY > hoverMiddleY) return;
+        if (itemNew.index > index && hoverClientY < hoverMiddleY) return;
+        console.log(hoverBoundingRect)
         
         moveIngredient(index, itemNew)
 
-        item.index = index.index
+        index = itemNew.index 
     }
   });
 
@@ -37,7 +37,7 @@ export const Mains = ({ deleteIngredient, item, first, moveIngredient, index }) 
     }),
   });
 
-  const opacity = isDrag ? 0 : 1;
+  const display = isDrag ? ": hidden" : ": visible";
 
   const ref = useRef(null);
 
@@ -47,7 +47,7 @@ export const Mains = ({ deleteIngredient, item, first, moveIngredient, index }) 
     <div
       className={styles.elementBox + first}
       ref={ref}
-      style={{ opacity }}
+      style={{ display }}
     >
       <button className={styles.dragDots} />
       <ConstructorElement
