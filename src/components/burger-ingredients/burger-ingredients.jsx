@@ -1,18 +1,21 @@
-import { useState, useEffect } from "react";
 import React from "react";
+import { useSelector } from "react-redux";
 import styles from "./burger-ingredients.module.css"
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientsList from "../ingredients-list/ingredients-list";
-import PropTypes from 'prop-types';
-import { BurgerPropTypes } from "../../utils/data";
 
-export const BurgerIngredients = (props) => {
+export const BurgerIngredients = () => {
 
     const [current, setCurrent] = React.useState('one')
 
+    // const { burger, setBurger } = React.useContext(Context).burger;
+
+    const { list, burger } = useSelector(store => ({
+        list: store.ingredients,
+        burger: store.burger,
+    })) 
+    
     return(
-        <>
-        
             <section>
                 <p className="text text_type_main-large">Соберите бургер</p>
                 <div className={"mt-5 mb-10 " + styles.tabs}>
@@ -26,39 +29,7 @@ export const BurgerIngredients = (props) => {
                         Начинки
                     </Tab></a>
                 </div> 
-                {props.ingredientsList.serverRespond === "Success" && <IngredientsList ingredients={props.ingredientsList.ingredients} burger={props} addIngredient={props.addIngredient}></IngredientsList>}
+                {list.serverRespond === "Success" && <IngredientsList respond={list.serverRespond} ingredients={list.ingredients} burger={burger} setTabNum={setCurrent}></IngredientsList>}
             </section>
-        </>
     )
 }
-
-BurgerIngredients.propTypes = {
-    top: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired, 
-        image: PropTypes.string,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired 
-      }).isRequired, //По непонятным мне причинам, он не подтягивает функцию
-      //Хотя с middle все ок
-      middle: PropTypes.arrayOf(PropTypes.shape({BurgerPropTypes})).isRequired,
-    
-      bottom: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired, 
-        image: PropTypes.string,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired })
-    }

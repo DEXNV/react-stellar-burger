@@ -1,17 +1,36 @@
-import { serverLink } from "./data";
+import { serverLink, serverOrderLink, checkResponse } from "./data";
+import { GET_INGREDIENTS_LIST, GET_INGREDIENTS_LIST_FAIL, ingredientListSuccess } from "../services/actions/burger-ingredients";
+import { addBurgerIngredient, changeBurgerBuns } from "../services/actions/burger-construcor";
+import { orderRequest, orderFailure, orderSuccess, ORDER_FAILURE, ORDER_REQUEST, ORDER_SUCCESS } from "../services/actions/order";
 
-function getIngredients(setData, setBurger) {
-    setData({serverRespond: "Loading"})
-    return fetch(serverLink)
-        .then(res => {return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));})
+function getIngredients() {
+    return function (dispatch) {
+        dispatch({type: GET_INGREDIENTS_LIST})
+        fetch(serverLink)
+        .then((res) => checkResponse(res))
         .then(json => {
-            setData({ingredients: json.data, serverRespond: "Success"})
-            setBurger({top: json.data[0], middle: json.data, bottom: json.data[0]})
+            dispatch(ingredientListSuccess(json))
         })
-        .catch(error => {
-            console.error(error);
-            setData({serverRespond: "Error"})
-        });
+        .catch((err) => {
+            console.log(err)
+            dispatch({type: GET_INGREDIENTS_LIST_FAIL})
+        })
+    }
 }
 
-export { getIngredients }
+function postOrder(ingredients) {
+    return function (dispatch) {
+        dispatch(orderRequest())
+        fetch(serverOrderLink, {
+            method: 'POST',
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            body: JSON.stringify({ "ingredients": ingredients })
+        })
+        .then(res => checkResponse(res))
+        .then(res => dispatch(orderSuccess(res)))
+        .catch(err => dispatch(orderFailure(err)))
+    }
+    
+}
+
+export { getIngredients, postOrder }

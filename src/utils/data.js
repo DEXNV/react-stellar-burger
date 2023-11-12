@@ -2,7 +2,7 @@ import { PropTypes } from 'prop-types'
 
 export const data = [
   {
-     "_id":"60666c42cc7b410027a1a9b1",
+     "_id":"643d69a5c3f7b9001cfa093c",
      "name":"Краторная булка N-200i",
      "type":"bun",
      "proteins":80,
@@ -213,6 +213,37 @@ export const data = [
   }
 ]
 
+export const defaultBun = {
+   "_id":"0",
+   "name":"Перетащите сюда булочки бургера",
+   "type":"bun",
+   "proteins":0,
+   "fat":0,
+   "carbohydrates":0,
+   "calories":0,
+   "price": 0,
+   "image":"",
+   "image_mobile":"",
+   "image_large":"",
+   "__v":0
+}
+
+export const defaultMain = {
+   "_id":"0",
+   "name":"Перетащите сюда соусы, начинки бургера",
+   "type":"bun",
+   "proteins":0,
+   "fat":0,
+   "carbohydrates":0,
+   "calories":0,
+   "price":0,
+   "image":"",
+   "image_mobile":"",
+   "image_large":"",
+   "__v":0,
+   "key": 0
+}
+
 export const BurgerPropTypes = () => {
    return {
        _id: PropTypes.string.isRequired,
@@ -230,3 +261,5 @@ export const BurgerPropTypes = () => {
 }
 
 export const serverLink = "https://norma.nomoreparties.space/api/ingredients"
+export const serverOrderLink = "https://norma.nomoreparties.space/api/orders"
+export const checkResponse = (res) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
