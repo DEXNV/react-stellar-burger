@@ -240,7 +240,8 @@ export const defaultMain = {
    "image":"",
    "image_mobile":"",
    "image_large":"",
-   "__v":0
+   "__v":0,
+   "key": 0
 }
 
 export const BurgerPropTypes = () => {

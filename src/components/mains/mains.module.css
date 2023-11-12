@@ -12,3 +12,7 @@
     align-items: center;
     transition: opacity .2s;
 }
+
+.elementBox:hover {
+    cursor: ns-resize;
+}

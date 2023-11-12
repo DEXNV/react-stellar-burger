@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from "react";
+import React, { useReducer, useEffect } from "react";
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-constructor.module.css";
 import { Modal } from "../../hocs/modal";
@@ -6,7 +6,7 @@ import OrderDetails from "../order-details/order-details";
 import { postOrder } from "../../utils/api-ingredients";
 import { useSelector, useDispatch } from "react-redux";
 import { openModal } from "../../services/actions/modal";
-import { useDrop, useDrag } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { addBurgerIngredient, deleteBurgerIngredient, changeBurgerMiddle, changeBurgerBuns } from "../../services/actions/burger-construcor";
 import { Mains } from "../mains/mains";
 import uuid from 'react-uuid';
@@ -21,7 +21,9 @@ export const BurgerConstructor = () => {
       orderState: store.order
     })) 
 
-    const defaultBuns = burger.bun._id == "0"
+    const defaultBuns = burger.bun._id === "0"
+    const defaultMain = burger.middle[0]._id === "0"
+    
     let bunsImage
     let bunsCost
     if(defaultBuns){
@@ -136,7 +138,7 @@ export const BurgerConstructor = () => {
                   <p className="text text_type_digits-medium">{order.cost}</p> 
                   <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="large" onClick={orderBtnClick}>Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="large" onClick={orderBtnClick} disabled={(defaultBuns || defaultMain)}>Оформить заказ</Button>
               </div>
             </section>
           )
